@@ -1,6 +1,7 @@
 #
 import cv2
 from apps.cve.face_detector import FaceDetector
+from apps.cve.face_trainer import FaceTrainer
 
 class CveApp(object):
     def __init__(self):
@@ -8,8 +9,10 @@ class CveApp(object):
 
     def startup(self, args={}):
         print('startup...')
-        fd = FaceDetector()
-        fd.startup(args)
+        # fd = FaceDetector()
+        # fd.startup(args)
+        trainer = FaceTrainer()
+        trainer.train()
 
     def t1(self):
         cap = cv2.VideoCapture('rtsp://192.168.2.68:8554/v7.mkv')
