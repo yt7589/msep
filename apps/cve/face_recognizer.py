@@ -1,27 +1,22 @@
 #
-import numpy as np
 import cv2
 from PIL import Image
 import face_recognition
-from apps.cve.controller.c_face_embedding_manager import CFaceEmbeddingManager
-from apps.cve.model.m_face_embedding_manager import MFaceEmbeddingManager
-from apps.cve.view.v_face_embedding_manager import VFaceEmbeddingManager
 
-class FaceTrainer(object):
+class FaceRecognizer(object):
     def __init__(self):
-        self.name = 'apps.cve.FaceTrainer'
-        self.controller = CFaceEmbeddingManager()
-        self.model = MFaceEmbeddingManager()
-        self.view = VFaceEmbeddingManager()
-        self.view.show_add_face()
+        self.name = 'apps.cve.FaceRecognizer'
+
+    def exp(self):
+        pass
+
+    def load_knowns(self):
+        '''
+        从文本文件载入已知人员列表，包括：姓名、embedding文件名
+        '''
+        pass
 
     def train(self):
-        i_debug = 1
-        if 1 == i_debug:
-            v1 = np.load('d:/temp/fe001.npy')
-            print('v1: {0};'.format(v1.shape))
-            return
-
         cap = cv2.VideoCapture(0)
         while True:
             ret, frame = cap.read()
@@ -56,11 +51,8 @@ class FaceTrainer(object):
                 print('Found face {} at top:{},right:{},bottom:{},left:{}'.format(index+1,top_pos,right_pos,bottom_pos,left_pos))
                 current_face_image = frame[top_pos:bottom_pos,left_pos:right_pos]
                 if cv2.waitKey(1) & 0xFF == ord('a'):
-                    face_embedding = np.array(face_recognition.face_encodings(current_face_image))
-                    print('face_embedding: {0};'.format(face_embedding.shape))
-                    np.save('d:/temp/fe001.npy', face_embedding)
-                    #im = Image.fromarray(current_face_image)
-                    #im.save("yt2.jpg")
+                    im = Image.fromarray(current_face_image)
+                    im.save("yt2.jpg")
                 #draw rectangle around the face detected
                 cv2.rectangle(frame,(left_pos,top_pos),(right_pos,bottom_pos),(0,0,255),2)
 
@@ -68,7 +60,7 @@ class FaceTrainer(object):
 
 
 
-            cv2.imshow("Webcam Video", frame)
+            cv2.imshow("人脸识别Demo", frame)
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
         cap.release()

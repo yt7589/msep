@@ -9,10 +9,12 @@ class CveApp(object):
 
     def startup(self, args={}):
         print('startup...')
-        # fd = FaceDetector()
-        # fd.startup(args)
         trainer = FaceTrainer()
         trainer.train()
+        #self.tkinter1()
+
+    def tkinter1(self):
+        pass
 
     def t1(self):
         cap = cv2.VideoCapture('rtsp://192.168.2.68:8554/v7.mkv')
