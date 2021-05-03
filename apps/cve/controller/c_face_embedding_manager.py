@@ -1,4 +1,5 @@
 # 
+from apps.cve.model.m_face_embedding_manager import MFaceEmbeddingManager
 
 class CFaceEmbeddingManager(object):
     def __init__(self):
