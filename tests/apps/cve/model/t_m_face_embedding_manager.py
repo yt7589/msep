@@ -21,3 +21,9 @@ class TMFaceEmbeddingManager(unittest.TestCase):
         fe_file = model.save_face_embedding_npy(face_embedding)
         self.assertEqual(1, 1)
         print(f'npy:{fe_file};')
+
+    def test_save_face_embedding(self):
+        model = MFaceEmbeddingManager()
+        face_name = '闫涛003'
+        fe_file = 'fe_000121.npy'
+        model.save_face_embedding(face_name, fe_file)

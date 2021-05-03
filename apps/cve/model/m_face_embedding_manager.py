@@ -20,8 +20,7 @@ class MFaceEmbeddingManager(object):
         np.save(fe_file, face_embedding_num)
         return fe_file
 
-    def save_face_embedding(self, face_name, face_embedding_num):
+    def save_face_embedding(self, face_name, fe_file):
         face_embedding_file = './data/embeddings/face_embedding.txt'
-        fe_file = 'fe_{0:6d}.npy'.format(face_embedding_num)
-        with oepn(face_embedding_file, 'w', encoding='utf-8') as fd:
-            fd.write('{0},{1}'.format(face_name, fe_file))
+        with open(face_embedding_file, 'a', encoding='utf-8') as fd:
+            fd.write('{0},{1}\n'.format(face_name, fe_file))
