@@ -27,3 +27,9 @@ class TMFaceEmbeddingManager(unittest.TestCase):
         face_name = '闫涛003'
         fe_file = 'fe_000121.npy'
         model.save_face_embedding(face_name, fe_file)
+
+    def test_save_face_image_data(self):
+        model = MFaceEmbeddingManager()
+        face_name = '莫迪'
+        face_image = './data/images_org/modi.jpg'
+        model.save_face_image_data(face_name, face_image)
