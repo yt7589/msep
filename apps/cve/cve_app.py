@@ -1,5 +1,6 @@
 #
 import cv2
+from apps.cve.controller.c_face_embedding_manager import CFaceEmbeddingManager
 from apps.cve.face_detector import FaceDetector
 from apps.cve.face_trainer import FaceTrainer
 
@@ -9,9 +10,9 @@ class CveApp(object):
 
     def startup(self, args={}):
         print('startup...')
-        trainer = FaceTrainer()
-        trainer.train()
         #self.tkinter1()
+        controller = CFaceEmbeddingManager()
+        controller.startup()
 
     def tkinter1(self):
         pass

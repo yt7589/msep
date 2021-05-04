@@ -12,21 +12,11 @@ class FaceTrainer(object):
         self.name = 'apps.cve.FaceTrainer'
         self.controller = CFaceEmbeddingManager()
         self.model = MFaceEmbeddingManager()
-        self.view = VFaceEmbeddingManager()
-        self.view.show_add_face()
 
     def train(self):
-        i_debug = 1
-        if 1 == i_debug:
-            v1 = np.load('d:/temp/fe001.npy')
-            print('v1: {0};'.format(v1.shape))
-            return
-
         cap = cv2.VideoCapture(0)
         while True:
             ret, frame = cap.read()
-
-
             frame_small = cv2.resize(frame,(0,0),fx=0.25,fy=0.25)
             #detect all faces in the image
             #arguments are image,no_of_times_to_upsample, model
@@ -53,21 +43,17 @@ class FaceTrainer(object):
                 if bottom_pos > frame.shape[0]:
                     bottom_pos = frame.shape[0]
                 #printing the location of current face
-                print('Found face {} at top:{},right:{},bottom:{},left:{}'.format(index+1,top_pos,right_pos,bottom_pos,left_pos))
+                #print('Found face {} at top:{},right:{},bottom:{},left:{}'.format(index+1,top_pos,right_pos,bottom_pos,left_pos))
                 current_face_image = frame[top_pos:bottom_pos,left_pos:right_pos]
                 if cv2.waitKey(1) & 0xFF == ord('a'):
                     face_embedding = np.array(face_recognition.face_encodings(current_face_image))
-                    print('face_embedding: {0};'.format(face_embedding.shape))
-                    np.save('d:/temp/fe001.npy', face_embedding)
+                    self.model.face_embedding = face_embedding
+                    view = VFaceEmbeddingManager(self.controller)
+                    view.show_add_face()
                     #im = Image.fromarray(current_face_image)
                     #im.save("yt2.jpg")
                 #draw rectangle around the face detected
                 cv2.rectangle(frame,(left_pos,top_pos),(right_pos,bottom_pos),(0,0,255),2)
-
-
-
-
-
             cv2.imshow("Webcam Video", frame)
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break

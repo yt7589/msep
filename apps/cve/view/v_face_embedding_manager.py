@@ -4,14 +4,13 @@ from tkinter import ttk
 
 
 class VFaceEmbeddingManager(object):
-    def __init__(self, controller, face_embedding):
+    def __init__(self, controller):
         self.name = 'apps.cve.VFaceEmbeddingManager'
         self.controller = controller
-        self.face_embedding = face_embedding
 
     def save_face(self, *args):
         face_name = self.face_name.get()
-        print('保存姓名：{0};'.format(face_name))
+        self.controller.save_face_embedding(face_name)
 
     def show_add_face(self):
         root = tk.Tk()
