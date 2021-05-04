@@ -13,8 +13,6 @@ class MFaceEmbeddingManager(object):
         '''
         获取自增的人脸特征向量文件编号
         '''
-        if self.face_embedding_num >= 0:
-            return self.face_embedding_num
         embedding_num_file = './data/embeddings/embedding_num.txt'
         with open(embedding_num_file, 'r', encoding='utf-8') as fd:
             for row in fd:
@@ -38,10 +36,10 @@ class MFaceEmbeddingManager(object):
         np.save(fe_file, face_embedding_num)
         return fe_file
 
-    def save_face_embedding(self, face_name, fe_file):
+    def save_face_embedding(self, face_name, fe_file, face_jpg):
         '''
         将人脸姓名和对应的特征向量文件对应关系保存到文件中
         '''
         face_embedding_file = './data/embeddings/face_embedding.txt'
         with open(face_embedding_file, 'a', encoding='utf-8') as fd:
-            fd.write('{0},{1}\n'.format(face_name, fe_file))
+            fd.write('{0},{1},{2}\n'.format(face_name, fe_file, face_jpg))

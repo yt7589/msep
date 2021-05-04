@@ -64,4 +64,4 @@ class CFaceEmbeddingManager(object):
         face_embedding = self.model.face_embedding
         fe_file = self.model.save_face_embedding_npy(face_embedding)
         face_jpg = self.model.save_face_jpg(self.model.face_data)
-        self.model.save_face_embedding(face_name, fe_file)
+        self.model.save_face_embedding(face_name, fe_file, face_jpg)
