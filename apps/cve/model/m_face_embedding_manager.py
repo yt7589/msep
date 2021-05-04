@@ -1,22 +1,33 @@
 # 
 import numpy as np
+import cv2
 
 class MFaceEmbeddingManager(object):
     def __init__(self):
         self.name = 'apps.cve.model.MFaceEmbeddingManager'
         self.face_embedding = None
+        self.face_data = None # 图像数据的数组形式
+        self.face_embedding_num = -1
 
     def get_face_embedding_num(self):
         '''
         获取自增的人脸特征向量文件编号
         '''
+        if self.face_embedding_num >= 0:
+            return self.face_embedding_num
         embedding_num_file = './data/embeddings/embedding_num.txt'
         with open(embedding_num_file, 'r', encoding='utf-8') as fd:
             for row in fd:
                 embedding_num = int(row) + 1
         with open(embedding_num_file, 'w', encoding='utf-8') as fd:
             fd.write('{0}'.format(embedding_num))
+        self.face_embedding_num = embedding_num
         return embedding_num
+
+    def save_face_jpg(self, face_data):
+        face_jpg = './data/images/img_{0:06d}.jpg'.format(self.face_embedding_num)
+        cv2.imwrite(face_jpg, face_data)
+        return face_jpg
 
     def save_face_embedding_npy(self, face_embedding):
         '''

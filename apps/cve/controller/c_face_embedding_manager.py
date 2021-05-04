@@ -4,7 +4,6 @@ import cv2
 import face_recognition
 from PIL import Image
 import face_recognition
-from apps.cve.controller.c_face_embedding_manager import CFaceEmbeddingManager
 from apps.cve.model.m_face_embedding_manager import MFaceEmbeddingManager
 from apps.cve.view.v_face_embedding_manager import VFaceEmbeddingManager
 
@@ -48,7 +47,8 @@ class CFaceEmbeddingManager(object):
                 if cv2.waitKey(1) & 0xFF == ord('a'):
                     face_embedding = np.array(face_recognition.face_encodings(current_face_image))
                     self.model.face_embedding = face_embedding
-                    view = VFaceEmbeddingManager(self.controller)
+                    self.model.face_data = current_face_image
+                    view = VFaceEmbeddingManager(self)
                     view.show_add_face()
                     #im = Image.fromarray(current_face_image)
                     #im.save("yt2.jpg")
@@ -63,4 +63,5 @@ class CFaceEmbeddingManager(object):
     def save_face_embedding(self, face_name):
         face_embedding = self.model.face_embedding
         fe_file = self.model.save_face_embedding_npy(face_embedding)
+        face_jpg = self.model.save_face_jpg(self.model.face_data)
         self.model.save_face_embedding(face_name, fe_file)
