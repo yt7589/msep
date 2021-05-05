@@ -14,10 +14,7 @@ class CFaceEmbeddingManager(object):
 
     def prepare_data(self):
         yt_image = face_recognition.load_image_file('images/samples/yt1.jpg')
-        yt_face_encodings = face_recognition.face_encodings(yt_image)[0]
-
-    def _load_image_data(self, image_file):
-        
+        yt_face_encodings = face_recognition.face_encodings(yt_image)[0]        
 
     def startup(self):
         cap = cv2.VideoCapture(0)

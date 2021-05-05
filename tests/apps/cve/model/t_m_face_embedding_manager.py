@@ -33,3 +33,9 @@ class TMFaceEmbeddingManager(unittest.TestCase):
         face_name = '莫迪'
         face_image = './data/images_org/modi.jpg'
         model.save_face_image_data(face_name, face_image)
+        face_name = '教师'
+        face_image = './data/images_org/abhi.jpg'
+        model.save_face_image_data(face_name, face_image)
+        face_name = '川普'
+        face_image = './data/images_org/trump.jpg'
+        model.save_face_image_data(face_name, face_image)
