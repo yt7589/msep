@@ -65,15 +65,12 @@ class CFaceEmbeddingManager(object):
         cv2.destroyAllWindows()
 
     def save_face_embedding(self, face_name):
+        '''
+        由界面的保存按钮触发，保存当前人脸图片
+        '''
         face_embedding = self.model.face_embedding
         fe_file = self.model.save_face_embedding_npy(face_embedding)
         face_jpg = self.model.save_face_jpg(self.model.face_data)
-        self.model.save_face_embedding(face_name, fe_file, face_jpg)
-
-    def text_to_jpg(self, text, jpg_file):
-        pil_image = im = Image.new("RGB", (100, 25), (255, 255, 255))
-        pil_draw = ImageDraw.Draw(pil_image)
-        font = ImageFont.truetype('./data/fonts/simsun.ttc', 16)
-        pil_draw.text((10, 5), text, font=font, fill="#000000")
-        pil_image.show()
-        pil_image.save('./data/images/user.jpg')
+        face_embedding_num = self.model.face_embedding_num
+        face_name_jpg = self.model.text_to_jpg(face_name, face_embedding_num)
+        self.model.save_face_embedding(face_name, fe_file, face_jpg, face_name_jpg)

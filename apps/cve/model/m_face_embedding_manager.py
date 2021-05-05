@@ -2,6 +2,7 @@
 import numpy as np
 import cv2
 import face_recognition
+from PIL import Image,ImageFont,ImageDraw
 
 class MFaceEmbeddingManager(object):
     def __init__(self):
@@ -37,13 +38,13 @@ class MFaceEmbeddingManager(object):
         np.save(fe_file, face_embedding)
         return fe_file
 
-    def save_face_embedding(self, face_name, fe_file, face_jpg):
+    def save_face_embedding(self, face_name, fe_file, face_jpg, face_name_jpg):
         '''
         将人脸姓名和对应的特征向量文件对应关系保存到文件中
         '''
         face_embedding_file = './data/embeddings/face_embedding.txt'
         with open(face_embedding_file, 'a', encoding='utf-8') as fd:
-            fd.write('{0},{1},{2}\n'.format(face_name, fe_file, face_jpg))
+            fd.write('{0},{1},{2},{3}\n'.format(face_name, fe_file, face_jpg, face_name_jpg))
 
     def save_face_image_data(self, face_name, face_image_file):
         '''
@@ -54,4 +55,19 @@ class MFaceEmbeddingManager(object):
         face_embedding = face_recognition.face_encodings(face_image)[0]
         print('face_embedding: {0};'.format(face_embedding.shape))
         fe_file = self.save_face_embedding_npy(face_embedding)
-        self.save_face_embedding(face_name, fe_file, face_image_file)
+        face_name_jpg = self.text_to_jpg(face_name, self.face_embedding_num)
+        self.save_face_embedding(face_name, fe_file, face_image_file, face_name_jpg)
+
+    
+    def text_to_jpg(self, text, face_embedding_num):
+        '''
+        将中文变为白色背景黑色的JPG图片，用于解决OpenCV不支持中文叠加的缺陷
+        '''
+        pil_image = im = Image.new("RGB", (100, 25), (255, 255, 255))
+        pil_draw = ImageDraw.Draw(pil_image)
+        font = ImageFont.truetype('./data/fonts/simsun.ttc', 16)
+        pil_draw.text((10, 5), text, font=font, fill="#000000")
+        #pil_image.show()
+        face_name_jpg = './data/images/u_{0:06d}.jpg'.format(face_embedding_num)
+        pil_image.save(face_name_jpg)
+        return face_name_jpg

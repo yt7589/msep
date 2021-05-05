@@ -12,8 +12,8 @@ class CveApp(object):
     def startup(self, args={}):
         print('startup...')
         #self.tkinter1()
-        #controller = CFaceEmbeddingManager() # 训练模型
-        controller = CFaceRecognizer() 
+        controller = CFaceEmbeddingManager() # 训练模型
+        #controller = CFaceRecognizer() 
         controller.startup()
 
     def tkinter1(self):
