@@ -11,7 +11,7 @@ class CFaceRecognizer(object):
     
     def startup(self, args={}):
         print('人脸识别程序 v0.0.1')
-        known_face_names, known_face_encodings = self.model.load_dataset()
+        known_face_names, known_face_name_jpgs, known_face_encodings = self.model.load_dataset()
         # 视频帧中所有人脸位置、编码和对应的姓名
         all_face_locations = []
         all_face_encodings = []
@@ -55,13 +55,18 @@ class CFaceRecognizer(object):
                 if True in all_matches:
                     first_match_index = all_matches.index(True)
                     name_of_person = known_face_names[first_match_index]
+                    name_jpg_of_person = known_face_name_jpgs[first_match_index]
                 
                 #draw rectangle around the face    
                 cv2.rectangle(current_frame,(left_pos,top_pos),(right_pos,bottom_pos),(255,0,0),2)
                 
                 #display the name as text in the image
-                font = cv2.FONT_HERSHEY_DUPLEX
-                cv2.putText(current_frame, name_of_person, (left_pos,bottom_pos), font, 0.5, (255,255,255),1)
+                #font = cv2.FONT_HERSHEY_DUPLEX
+                #cv2.putText(current_frame, name_of_person, (left_pos,bottom_pos), font, 0.5, (255,255,255),1)
+                # 绘制姓名图像
+                for col in range(100):
+                    for row in range(25):
+                        current_frame[bottom_pos-50+row, left_pos+col] = name_jpg_of_person[row, col]
             
             #display the video
             cv2.imshow("Webcam Video",current_frame)
