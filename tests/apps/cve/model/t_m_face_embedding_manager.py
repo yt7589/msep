@@ -39,3 +39,7 @@ class TMFaceEmbeddingManager(unittest.TestCase):
         face_name = '川普'
         face_image = './data/images_org/trump.jpg'
         model.save_face_image_data(face_name, face_image)
+
+        t_file = './data/embeddings/fe_000001.npy'
+        a1 = np.load(t_file)
+        print('a1: {0}; {1};'.format(type(a1), a1.shape))

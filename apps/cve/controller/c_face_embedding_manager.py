@@ -2,7 +2,7 @@
 import numpy as np
 import cv2
 import face_recognition
-from PIL import Image
+from PIL import Image,ImageFont,ImageDraw
 import face_recognition
 from apps.cve.model.m_face_embedding_manager import MFaceEmbeddingManager
 from apps.cve.view.v_face_embedding_manager import VFaceEmbeddingManager
@@ -50,7 +50,7 @@ class CFaceEmbeddingManager(object):
                 current_face_image = frame[top_pos:bottom_pos,left_pos:right_pos]
                 if cv2.waitKey(1) & 0xFF == ord('a'):
                     face_embedding = np.array(face_recognition.face_encodings(current_face_image))
-                    self.model.face_embedding = face_embedding
+                    self.model.face_embedding = np.reshape(face_embedding, (face_embedding.shape[1],))
                     self.model.face_data = current_face_image
                     view = VFaceEmbeddingManager(self)
                     view.show_add_face()
@@ -69,3 +69,11 @@ class CFaceEmbeddingManager(object):
         fe_file = self.model.save_face_embedding_npy(face_embedding)
         face_jpg = self.model.save_face_jpg(self.model.face_data)
         self.model.save_face_embedding(face_name, fe_file, face_jpg)
+
+    def text_to_jpg(self, text, jpg_file):
+        pil_image = im = Image.new("RGB", (100, 25), (255, 255, 255))
+        pil_draw = ImageDraw.Draw(pil_image)
+        font = ImageFont.truetype('./data/fonts/simsun.ttc', 16)
+        pil_draw.text((10, 5), text, font=font, fill="#000000")
+        pil_image.show()
+        pil_image.save('./data/images/user.jpg')

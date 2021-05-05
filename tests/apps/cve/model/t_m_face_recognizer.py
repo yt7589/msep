@@ -11,5 +11,7 @@ class TMFaceRecognizer(unittest.TestCase):
 
     def test_load_dataset(self):
         model = MFaceRecognizer()
-        model.load_dataset()
+        known_face_names, known_face_encodings = model.load_dataset()
+        for name, code in zip(known_face_names, known_face_encodings):
+            print('name: {0}, code: {1};'.format(name, type(code)))
         self.assertEqual(1, 1)

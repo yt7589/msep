@@ -34,7 +34,7 @@ class MFaceEmbeddingManager(object):
         '''
         face_embedding_num = self.get_face_embedding_num()
         fe_file = './data/embeddings/fe_{0:06d}.npy'.format(face_embedding_num)
-        np.save(fe_file, face_embedding_num)
+        np.save(fe_file, face_embedding)
         return fe_file
 
     def save_face_embedding(self, face_name, fe_file, face_jpg):
@@ -52,5 +52,6 @@ class MFaceEmbeddingManager(object):
         #face_embedding_num = self.get_face_embedding_num()
         face_image = face_recognition.load_image_file(face_image_file)
         face_embedding = face_recognition.face_encodings(face_image)[0]
+        print('face_embedding: {0};'.format(face_embedding.shape))
         fe_file = self.save_face_embedding_npy(face_embedding)
         self.save_face_embedding(face_name, fe_file, face_image_file)

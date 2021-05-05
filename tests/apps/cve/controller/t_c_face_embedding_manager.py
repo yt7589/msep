@@ -16,3 +16,7 @@ class TCFaceEmbeddingManager(unittest.TestCase):
         face_embedding = np.array([[1.0, 2, 3, 4, 5, 6, 7, 8]])
         controller = CFaceEmbeddingManager()
         controller.save_face_embedding(face_name)
+
+    def test_text_to_jpg(self):
+        controller = CFaceEmbeddingManager()
+        controller.text_to_jpg('特朗普', 'aaa.jpg')

@@ -1,6 +1,7 @@
 #
 import cv2
 from apps.cve.controller.c_face_embedding_manager import CFaceEmbeddingManager
+from apps.cve.controller.c_face_recognizer import CFaceRecognizer
 from apps.cve.face_detector import FaceDetector
 from apps.cve.face_trainer import FaceTrainer
 
@@ -11,7 +12,8 @@ class CveApp(object):
     def startup(self, args={}):
         print('startup...')
         #self.tkinter1()
-        controller = CFaceEmbeddingManager()
+        #controller = CFaceEmbeddingManager() # 训练模型
+        controller = CFaceRecognizer() 
         controller.startup()
 
     def tkinter1(self):
