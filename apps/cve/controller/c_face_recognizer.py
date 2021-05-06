@@ -17,7 +17,8 @@ class CFaceRecognizer(object):
         all_face_encodings = []
         all_face_names = []
         # 启动摄像头
-        webcam_video_stream = cv2.VideoCapture(0)
+        #webcam_video_stream = cv2.VideoCapture(0)
+        webcam_video_stream = cv2.VideoCapture('rtsp://admin:zjkj2020@192.168.2.241:554/cam/realmonitor?channel=1&subtype=0')
         #loop through every frame in the video
         while True:
             #get the current frame from the video stream as an image
