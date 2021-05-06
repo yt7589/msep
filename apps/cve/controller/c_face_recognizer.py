@@ -17,14 +17,21 @@ class CFaceRecognizer(object):
         all_face_encodings = []
         all_face_names = []
         # 启动摄像头
-        #webcam_video_stream = cv2.VideoCapture(0)
-        webcam_video_stream = cv2.VideoCapture('rtsp://admin:zjkj2020@192.168.2.241:554/cam/realmonitor?channel=1&subtype=0')
+        webcam_video_stream = cv2.VideoCapture(0)
+        #webcam_video_stream = cv2.VideoCapture('rtsp://admin:zjkj2020@192.168.2.241:554/cam/realmonitor?channel=1&subtype=0')
         #loop through every frame in the video
+        seq = 0
+        process_per_frames = 5
         while True:
             #get the current frame from the video stream as an image
             ret,current_frame = webcam_video_stream.read()
-            #resize the current frame to 1/4 size to proces faster
-            current_frame_small = cv2.resize(current_frame,(0,0),fx=0.25,fy=0.25)
+            try:
+                #current_frame = cv2.resize(current_frame, (0, 0), fx=0.5, fy=0.5)
+                #resize the current frame to 1/4 size to proces faster
+                current_frame_small = cv2.resize(current_frame,(0,0),fx=0.25,fy=0.25)
+            except:
+                print('视频处理失败')
+                exit(1)
             #detect all faces in the image
             #arguments are image,no_of_times_to_upsample, model
             all_face_locations = face_recognition.face_locations(current_frame_small,number_of_times_to_upsample=1,model='hog')
@@ -65,9 +72,10 @@ class CFaceRecognizer(object):
                 #font = cv2.FONT_HERSHEY_DUPLEX
                 #cv2.putText(current_frame, name_of_person, (left_pos,bottom_pos), font, 0.5, (255,255,255),1)
                 # 绘制姓名图像
-                for col in range(100):
-                    for row in range(25):
-                        current_frame[bottom_pos-50+row, left_pos+col] = name_jpg_of_person[row, col]
+                if name_jpg_of_person is not None:
+                    for col in range(100):
+                        for row in range(25):
+                            current_frame[bottom_pos-50+row, left_pos+col] = name_jpg_of_person[row, col]
             
             #display the video
             cv2.imshow("Webcam Video",current_frame)
