@@ -3,6 +3,10 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# VC projects
+msvc/
+
+
 # dataset and image
 data/
 data/images
